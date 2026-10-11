@@ -1,46 +1,50 @@
 ---
 name: statics-protocol
-description: External-user guide and execution workflow for Statics Protocol. Use for questions or actions involving the live Robinhood Chain Genesis launch, STATICS, Statics Operators/Genesis NFTs, Operator activation, rewards, Genesis Secured Credit, purchases, redemptions, transfers, portfolio inspection, or bulk operations across many Operators. Also use to explain the planned Statics rollout, including Phase 1 markets and staking, Phase 2 baskets and credit, Phase 3 Statics Dollar, and Phase 4 Morpho. Always distinguish live production functionality from planned or design-only functionality.
+description: Guide users of live Statics Genesis and Phase 1. Use for Operator portfolios, purchases, activation, rewards, secured credit, or Phase 1 pools, PositionNFTs, staking, liquidity, gauges, and claims. Explain later basket, Statics Dollar, and Morpho phases with their distinct deployment status.
 ---
 
 # Statics Protocol
 
-Serve external Statics users. Explain the protocol accurately, inspect live Genesis state, and orchestrate safe user-authorized actions across one or many Statics Operators.
+Serve external Statics users. Guide Statics Genesis and Phase 1 actions, including safe portfolio operations across many Statics Operators. Explain later phases from Statics master without treating source code as proof that those phases are deployed.
 
 ## Status discipline
 
 Classify functionality before answering:
 
-- **LIVE**: deployed on Robinhood Chain production and supported by production deployment evidence.
-- **PLANNED**: committed or actively developed rollout functionality that is not yet production deployed.
-- **DESIGN**: architecture or future functionality that is not a production commitment.
+- **LIVE RELEASE**: Statics Genesis and Phase 1 are the user-facing surfaces covered by this skill. Resolve Phase 1 contracts through [references/phase-one-deployment.md](references/phase-one-deployment.md) and current chain reads before any address-specific statement or transaction.
+- **IMPLEMENTED LATER PHASE**: Phases 2–4 are present in master's staged selector plan; do not expose their actions until the corresponding production cut is verified.
+- **DESIGN**: proposed architecture or future behavior without a confirmed implementation and deployment.
 
-Never infer production availability from source code, tests, testnet deployments, ADRs, README, or Statics-Design.md alone.
+This skill is written for the Phase 1 release. Its Phase 1 address record has fields to complete after deployment. Never invent addresses or treat an unfilled field as a transaction target. Use the deployment manifest and onchain selectors to verify the release before executing actions. Source code, tests, ADRs, README, and testnet rehearsals do not establish the deployed contract state.
 
 For current status and source authority, read references/sources.md.
 For live Genesis mechanics and addresses, read references/live-genesis.md.
-For planned rollout questions, read references/phases.md.
+For rollout questions, read references/phases.md. For Phase 1 markets, PositionNFTs, staking, liquidity, rewards, or transactions, read references/phase-one.md and references/phase-one-deployment.md.
 
-When a user asks what Statics is, lead with the LIVE Genesis system, then explain how the planned phases expand it.
+When a user asks what Statics is, explain Statics Genesis and Phase 1 markets, PositionNFTs, staking, liquidity, and rewards. Label Phases 2–4 as later protocol phases.
 
 ## User-facing terminology
 
 Prefer **Operator** when speaking to users. Use **Genesis** when referring to contract names, function names, events, or exact onchain terminology.
+
+Call the main Phase 1 contract **the protocol** in user-facing explanations. Use its exact contract name only for an address, ABI, or source-code lookup.
 
 Call the credit product **Genesis Secured Credit**. Do not describe it as an APR-based lending market. Principal does not accrue interest over time; service time is purchased with flat native fees.
 
 ## Decide the task
 
 1. **Knowledge or explanation**
-   - Answer from the live/reference boundary above.
-   - Clearly label planned functionality.
+   - Answer from the production/source/design boundary above.
+   - Label the deployment status of each relevant capability.
 2. **Portfolio inspection**
-   - Discover the user's owned Operators.
+   - For Genesis, discover the user's owned Operators.
+   - For Phase 1, discover PositionNFTs from a trusted indexer or ERC-721 events, verify current `ownerOf`, then read active legs, stake, allocations, managed LP positions, and relevant claimables.
    - Build a current state snapshot before making recommendations or transaction plans.
 3. **Execution or transaction planning**
    - Read references/genesis-actions.md for exact action semantics.
    - Read references/bulk-operations.md whenever more than one Operator may be involved.
    - Use current onchain reads and quotes for mutable values.
+   - For Phase 1 actions, read the Phase 1 execution preflight and address record. Verify the deployed protocol contract, installed selectors, contract bindings, and current ABI. Do not send Phase 1 calls to Genesis contracts.
 
 ## Genesis execution workflow
 
@@ -189,5 +193,7 @@ For each, inspect first, filter only eligible Operators, calculate aggregate eff
 - references/live-genesis.md: production Genesis deployment, immutable mechanics, and mutable launch defaults
 - references/genesis-actions.md: exact external-user functions, preconditions, approvals, and batching behavior
 - references/bulk-operations.md: portfolio orchestration, chunking, retries, idempotency, and execution safety
-- references/phases.md: planned Statics rollout after Genesis
+- references/phases.md: Statics Genesis and Phase 1 plus later implemented protocol phases
+- references/phase-one.md: Phase 1 market, PositionNFT, reward, and liquidity actions
+- references/phase-one-deployment.md: Phase 1 production address fields and verification record
 - references/sources.md: source hierarchy and production-vs-design rules

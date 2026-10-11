@@ -1,87 +1,35 @@
-# Planned Statics Rollout
+# Statics phased rollout
 
-This file describes planned functionality, not current production availability.
+This guide presents Statics Genesis and Phase 1 as the user experience. Phase 1 production addresses are supplied in [phase-one-deployment.md](phase-one-deployment.md) after release. Later protocol phases are implemented in Statics master but require separate production activation. Check [sources.md](sources.md) for the evidence needed to answer a current deployment question.
 
-The phase structure is taken from the current Phase 1 release candidate work in EqualFiLabs/statics PR #96. Re-check production deployment evidence before changing any phase from PLANNED to LIVE.
+## Statics Genesis
 
-## LIVE: Standalone Genesis
+The production Genesis manifest records the STATICS token, 5,555 Operators, their fully backed vault and native reserve, activation tiers, launch reward distributor, permanent STATICS/WETH Doppler market, and Genesis Secured Credit. These contracts and market are separate from the Phase 1 protocol contract. See [live-genesis.md](live-genesis.md) for addresses and mechanics; verify mutable state onchain.
 
-Production currently begins with:
+## Live Phase 1: markets, PositionNFTs, and staking
 
-- STATICS token
-- 5,555 Statics Operators
-- Genesis Vault and permanent native reserve
-- activation tiers
-- launch Genesis rewards
-- permanent STATICS/WETH Doppler market and fee ingress
-- Genesis Secured Credit
+Phase 1 uses one protocol address for public and permissioned Uniswap v4 market paths, PositionNFT accounts, global STATICS staking and selected-asset rewards, managed public LP positions, range gauges, weekly reserve-backed protocol incentives, direct funded reward slots, typed batch claims, market views, and guardian stops. Public pools support compatible ERC-20 pairs and native ETH/ERC-20 pairs. Permissioned venues have their own hook, controller, trusted periphery, approved non-transferable LP positions, and fee policy. See [phase-one.md](phase-one.md) for actions and boundaries.
 
-## PLANNED Phase 1: Markets and staking
+The Robinhood mainnet launch configuration sets public pool creation to **0.01 ETH**. Anyone may create a public pool with the exact quoted native payment; relayed creation also requires the creator's authorization, while a direct creator needs no signature. Creation does not seed liquidity automatically. Read the deployed fee and `quotePool(params)` before a transaction. The launch configuration also sets **0.001 ETH** per PositionNFT and **0.025 ETH** for optional managed-POL activation; read deployed values before payment.
 
-Current release-candidate scope includes:
+The deployment signer configures Phase 1, then transfers protocol ownership to the governance Safe. Launch operators create and verify an initial public pool before the Safe transfers ownership to the timelock. Permissioned pool creation remains owner-only, so the Safe may create an initial venue and later requests go through the timelock. Fee-paid public pool creation requires no governance transaction.
 
-- permissionless Statics-hook general pools
-- separate permissioned general pools
-- creator-selected native Uniswap v4 LP fees
-- Statics public hook fees and protocol-owned liquidity on the public path
-- creator and treasury revenue accounting
-- PositionNFT
-- global STATICS staking
-- reward selection and reward-restriction policy
-- creator-operated permissioned venue controllers
-- approved permissioned LP infrastructure
+Phase 1 does not install basket, self-backed credit, flash-loan, protocol-side Genesis integration, Statics Dollar, Morpho, or borrow-to-liquidity selectors. Its gauge allocation uses raw staked STATICS, not Operator activation multipliers.
 
-The standalone Genesis deployment remains separate and untouched by Phase 1 deployment.
+## Phase 2: baskets, credit, flash composition, and Genesis integration
 
-## PLANNED Phase 2: Baskets, basket credit, and Genesis integration
+The next timelocked upgrade adds fixed-composition BasketTokens, basket creation and redemption, basket collateral and rewards, proportional self-backed credit, canonical basket pools and liquidity, borrow-to-liquidity, basket-vector and single-asset flash loans, and protocol-side Genesis Operator linkage and rewards. Existing Genesis contracts are not redeployed by this upgrade. A separate governance handoff binds the new integration surface.
 
-Planned Phase 2 expands the same StaticsDiamond with:
+Each BasketToken represents a fixed constituent bundle; its composition does not automatically rebalance. A basket's creation and liquidity configuration remain distinct from general-pool creation.
 
-- fixed-composition static baskets
-- basket minting and redemption
-- basket collateral and rewards
-- self-backed basket credit
-- flash-loan composition
-- canonical basket liquidity
-- borrow-to-liquidity flows
-- Diamond-side Genesis integration and Position linkage
-- planned permissioned basket and restricted-asset adapter infrastructure
+## Phase 3: Statics Dollar
 
-A BasketToken represents fixed underlying amounts. Basket composition does not rebalance.
+The next upgrade adds Dollar periphery and a separate Dollar Core custody and solvency boundary, plus the senior `USDstx` token and ERC-1155 Risk Shares. The implemented design includes volatile and pegged collateral profiles, issuance, recombination, health controls, insurance, transition, and recovery. Dollar Core and the main protocol have different roles even though they share timelock governance.
 
-## PLANNED Phase 3: Statics Dollar
+## Phase 4: Morpho
 
-Planned capabilities include:
+The final upgrade adds Position-owned Morpho administration, collateral deployment, borrowing and repayment, synchronization, settlement, recovery, and views. It uses the configured external Morpho deployment; per-Position account contracts are created when first used. Market and oracle configuration are separate from installing the selectors.
 
-- USDstx senior token
-- volatile collateral profiles
-- ERC-1155 Risk Shares
-- pegged collateral profiles
-- recombination
-- series lifecycle and transition
-- insurance and recovery
-- Risk Share liquidity and pairing flows
+## Source of exact phase composition
 
-## PLANNED Phase 4: Morpho integration
-
-Planned Phase 4 adds Morpho integration around Position-owned finance, including:
-
-- market administration
-- Position collateral deployment
-- borrowing and repayment
-- synchronization and settlement
-- recovery and views
-
-## Roadmap wording
-
-Say:
-
-```text
-Today, the live Statics product is the standalone Genesis system.
-Phase 1 is planned to add general Statics markets, PositionNFTs, and STATICS staking.
-Phase 2 is planned to add baskets and basket-backed credit.
-Phase 3 is planned to add the Statics Dollar.
-Phase 4 is planned to add Morpho integration.
-```
-
-Avoid launch dates unless a current official source explicitly commits to them.
+`script/libraries/StaticsProtocolPlan.sol` assigns selectors to phases. The accepted `docs/adr/staged-phase-one-launch.md` describes deployment and upgrade boundaries. Use deployed selector and ERC-165 checks for the protocol. Verify current facet and selector totals against the plan and deployed routes rather than memorizing prose counts.

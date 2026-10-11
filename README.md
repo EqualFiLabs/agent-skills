@@ -8,4 +8,4 @@ Reusable AI agent skills for EqualFi Labs protocols and products.
 
 `skills/statics-protocol/`
 
-External-user Statics guidance and live Genesis execution workflows, including portfolio-scale orchestration across many Statics Operators and a strict distinction between production-live Genesis functionality and planned protocol phases.
+External-user guidance for Statics Genesis and Phase 1 markets, PositionNFTs, staking, liquidity, and rewards. It includes portfolio-scale Operator workflows, Phase 1 deployment address fields to complete at release, and source-grounded guidance for later protocol phases.
