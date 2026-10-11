@@ -5,13 +5,13 @@ description: Guide users of live Statics Genesis and Phase 1. Use for Operator p
 
 # Statics Protocol
 
-Serve external Statics users. Guide live standalone Genesis and Phase 1 actions, including safe portfolio operations across many Statics Operators. Explain later phases from Statics master without treating source code as proof that those phases are deployed.
+Serve external Statics users. Guide Statics Genesis and Phase 1 actions, including safe portfolio operations across many Statics Operators. Explain later phases from Statics master without treating source code as proof that those phases are deployed.
 
 ## Status discipline
 
 Classify functionality before answering:
 
-- **LIVE RELEASE**: standalone Genesis and Phase 1 are the user-facing surfaces covered by this skill. Resolve Phase 1 contracts through [references/phase-one-deployment.md](references/phase-one-deployment.md) and current chain reads before any address-specific statement or transaction.
+- **LIVE RELEASE**: Statics Genesis and Phase 1 are the user-facing surfaces covered by this skill. Resolve Phase 1 contracts through [references/phase-one-deployment.md](references/phase-one-deployment.md) and current chain reads before any address-specific statement or transaction.
 - **IMPLEMENTED LATER PHASE**: Phases 2–4 are present in master's staged selector plan; do not expose their actions until the corresponding production cut is verified.
 - **DESIGN**: proposed architecture or future behavior without a confirmed implementation and deployment.
 
@@ -21,11 +21,13 @@ For current status and source authority, read references/sources.md.
 For live Genesis mechanics and addresses, read references/live-genesis.md.
 For rollout questions, read references/phases.md. For Phase 1 markets, PositionNFTs, staking, liquidity, rewards, or transactions, read references/phase-one.md and references/phase-one-deployment.md.
 
-When a user asks what Statics is, explain the live standalone Genesis and Phase 1 markets, PositionNFTs, staking, liquidity, and rewards. Label Phases 2–4 as later implemented cuts.
+When a user asks what Statics is, explain Statics Genesis and Phase 1 markets, PositionNFTs, staking, liquidity, and rewards. Label Phases 2–4 as later protocol phases.
 
 ## User-facing terminology
 
 Prefer **Operator** when speaking to users. Use **Genesis** when referring to contract names, function names, events, or exact onchain terminology.
+
+Call the main Phase 1 contract **the protocol** in user-facing explanations. Use its exact contract name only for an address, ABI, or source-code lookup.
 
 Call the credit product **Genesis Secured Credit**. Do not describe it as an APR-based lending market. Principal does not accrue interest over time; service time is purchased with flat native fees.
 
@@ -42,7 +44,7 @@ Call the credit product **Genesis Secured Credit**. Do not describe it as an APR
    - Read references/genesis-actions.md for exact action semantics.
    - Read references/bulk-operations.md whenever more than one Operator may be involved.
    - Use current onchain reads and quotes for mutable values.
-   - For Phase 1 actions, read the Phase 1 execution preflight and address record. Verify the deployed Diamond, installed selectors, contract bindings, and current ABI. Do not send Phase 1 calls to standalone Genesis contracts.
+   - For Phase 1 actions, read the Phase 1 execution preflight and address record. Verify the deployed protocol contract, installed selectors, contract bindings, and current ABI. Do not send Phase 1 calls to Genesis contracts.
 
 ## Genesis execution workflow
 
@@ -191,7 +193,7 @@ For each, inspect first, filter only eligible Operators, calculate aggregate eff
 - references/live-genesis.md: production Genesis deployment, immutable mechanics, and mutable launch defaults
 - references/genesis-actions.md: exact external-user functions, preconditions, approvals, and batching behavior
 - references/bulk-operations.md: portfolio orchestration, chunking, retries, idempotency, and execution safety
-- references/phases.md: live Genesis and Phase 1 plus later implemented phase cuts
+- references/phases.md: Statics Genesis and Phase 1 plus later implemented protocol phases
 - references/phase-one.md: Phase 1 market, PositionNFT, reward, and liquidity actions
 - references/phase-one-deployment.md: Phase 1 production address fields and verification record
 - references/sources.md: source hierarchy and production-vs-design rules

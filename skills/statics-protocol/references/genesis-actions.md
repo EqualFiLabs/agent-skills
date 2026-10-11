@@ -1,6 +1,6 @@
 # Genesis Actions
 
-Use this as the external-user action map for the live standalone Genesis deployment.
+Use this as the external-user action map for Statics Genesis.
 
 Mutable values must be read onchain immediately before execution.
 

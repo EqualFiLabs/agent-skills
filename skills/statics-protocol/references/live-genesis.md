@@ -2,7 +2,7 @@
 
 ## Production boundary
 
-The standalone Genesis system is live on Robinhood Chain production.
+Statics Genesis is live on Robinhood Chain production.
 
 - Network: Robinhood Chain
 - Chain ID: 4663
